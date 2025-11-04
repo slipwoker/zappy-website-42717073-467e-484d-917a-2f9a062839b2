@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://psyformance-42717073.zappy5.app/sitemap.xml
