@@ -1,0 +1,43 @@
+# Business — Generative Engine Optimization Map
+
+---
+
+## Pages
+
+### About
+https://psyformance-by-guy-novak.zappy5.app/about
+
+### Contact
+https://psyformance-by-guy-novak.zappy5.app/contact
+
+### Home
+https://psyformance-by-guy-novak.zappy5.app
+
+### Services
+https://psyformance-by-guy-novak.zappy5.app/services
+
+## Legal & Policy
+
+### Privacy Policy
+https://psyformance-by-guy-novak.zappy5.app/privacy
+Information about how user data is collected, stored, and protected.
+
+### Terms & Conditions
+https://psyformance-by-guy-novak.zappy5.app/terms
+Legal terms describing service usage, rights, and policies.
+
+### Accessibility Statement
+https://psyformance-by-guy-novak.zappy5.app/accessibility
+Information about WCAG compliance and accessibility features.
+
+---
+
+# Business Context (for LLM understanding)
+
+## About Business
+---
+
+# Additional Resources
+
+- **Sitemap**: https://psyformance-by-guy-novak.zappy5.app/sitemap.xml
+- **Robots.txt**: https://psyformance-by-guy-novak.zappy5.app/robots.txt
