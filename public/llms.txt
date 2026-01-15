@@ -1,55 +1,43 @@
-# Psyformance by Guy Novak — Generative Engine Optimization Map
-
-> A General business.
+# Business — Generative Engine Optimization Map
 
 ---
 
 ## Pages
 
 ### About
-https://psyformance-by-guy-novak.zappy5.app/about
+https://guynovak.co.il/about
 
 ### Contact
-https://psyformance-by-guy-novak.zappy5.app/contact
+https://guynovak.co.il/contact
 
 ### Home
-https://psyformance-by-guy-novak.zappy5.app
+https://guynovak.co.il
 
 ### Services
-https://psyformance-by-guy-novak.zappy5.app/services
+https://guynovak.co.il/services
 
 ## Legal & Policy
 
 ### Privacy Policy
-https://psyformance-by-guy-novak.zappy5.app/privacy
+https://guynovak.co.il/privacy
 Information about how user data is collected, stored, and protected.
 
 ### Terms & Conditions
-https://psyformance-by-guy-novak.zappy5.app/terms
+https://guynovak.co.il/terms
 Legal terms describing service usage, rights, and policies.
 
 ### Accessibility Statement
-https://psyformance-by-guy-novak.zappy5.app/accessibility
+https://guynovak.co.il/accessibility
 Information about WCAG compliance and accessibility features.
 
 ---
 
 # Business Context (for LLM understanding)
 
-## About Psyformance by Guy Novak
-Psyformance by Guy Novak is a business in the General industry.
-
-## Target Audience
-- בעלי עסקים בתחום הטכנולוגיה
-- חובבי שיפור ביצועים
-- מאמנים עסקיים
-
-## Industry
-General
-
+## About Business
 ---
 
 # Additional Resources
 
-- **Sitemap**: https://psyformance-by-guy-novak.zappy5.app/sitemap.xml
-- **Robots.txt**: https://psyformance-by-guy-novak.zappy5.app/robots.txt
+- **Sitemap**: https://guynovak.co.il/sitemap.xml
+- **Robots.txt**: https://guynovak.co.il/robots.txt
