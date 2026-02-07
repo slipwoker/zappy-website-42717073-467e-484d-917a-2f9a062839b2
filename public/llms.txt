@@ -1,4 +1,6 @@
-# Business — Generative Engine Optimization Map
+# Psyformance by Guy Novak — Generative Engine Optimization Map
+
+> A General business.
 
 ---
 
@@ -34,7 +36,17 @@ Information about WCAG compliance and accessibility features.
 
 # Business Context (for LLM understanding)
 
-## About Business
+## About Psyformance by Guy Novak
+Psyformance by Guy Novak is a business in the General industry.
+
+## Target Audience
+- בעלי עסקים בתחום הטכנולוגיה
+- חובבי שיפור ביצועים
+- מאמנים עסקיים
+
+## Industry
+General
+
 ---
 
 # Additional Resources
