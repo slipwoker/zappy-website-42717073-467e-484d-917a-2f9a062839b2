@@ -1,4 +1,224 @@
-<!DOCTYPE html><html dir="rtl" lang="he"><head><meta charset="UTF-8"><meta content="width=device-width,initial-scale=1" name="viewport"><title>Services</title><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"><link href="/assets/favicon.ico" rel="icon" type="image/x-icon"><link href="/assets/favicon-16x16.png" rel="icon" type="image/png" sizes="16x16"><link href="/assets/favicon-32x32.png" rel="icon" type="image/png" sizes="32x32"><link href="/assets/favicon-48x48.png" rel="icon" type="image/png" sizes="48x48"><link href="/assets/favicon-192x192.png" rel="icon" type="image/png" sizes="192x192"><link href="/assets/favicon-512x512.png" rel="icon" type="image/png" sizes="512x512"><link href="/assets/apple-touch-icon.png" rel="apple-touch-icon"><style>.zappy-header{position:static;width:100%;background:#fff;box-shadow:0 4px 19px 0 rgba(0,0,0,.04);padding:16px 10px;text-align:center;font-family:Nunito,sans-serif;font-size:16px;color:#4a4a4a;line-height:21px;display:flex;align-items:center;justify-content:center;min-height:21px}.zappy-header p{margin:0;padding:0;font-weight:400;font-size:16px;line-height:21px;white-space:nowrap;display:inline-block;vertical-align:baseline;margin-bottom:0!important}.zappy-header .created-by{text-transform:lowercase;font-weight:400}.zappy-header .zappy-link{font-weight:700;color:#4a4a4a;text-decoration:none;transition:opacity .2s}.zappy-header .zappy-link:hover{opacity:.7}</style><link href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css" rel="stylesheet"><script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script><script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script><script>!function(){"use strict";var t="42717073-467e-484d-917a-2f9a062839b2",e="https://api.zappy5.com/api/analytics/track",a=18e5,n=2592e6,o=!0,i=!0,r=!0;var s=function(){var e="zappy_visitor_"+t,a=null;try{if(a=localStorage.getItem(e)){var o=JSON.parse(a),i=Date.now();if(i-o.created<n)return o.lastSeen=i,localStorage.setItem(e,JSON.stringify(o)),o.id}}catch(t){console.warn("Zappy Analytics: LocalStorage not available")}var r="zv_"+Date.now()+"_"+Math.random().toString(36).substr(2,9);try{localStorage.setItem(e,JSON.stringify({id:r,created:Date.now(),lastSeen:Date.now()}))}catch(t){}return r}(),c=function(){var e="zappy_session_"+t,n=null;try{if(n=sessionStorage.getItem(e)){var o=JSON.parse(n),i=Date.now();if(i-o.timestamp<a)return o.timestamp=i,sessionStorage.setItem(e,JSON.stringify(o)),o.id}}catch(t){console.warn("Zappy Analytics: SessionStorage not available")}var r="zs_"+Date.now()+"_"+Math.random().toString(36).substr(2,9);try{sessionStorage.setItem(e,JSON.stringify({id:r,timestamp:Date.now()}))}catch(t){}return r}();function l(a,n){n=n||{};var o={website_id:t,event_type:a,page_path:window.location.pathname,referrer:document.referrer||"direct",visitor_id:s,session_id:c,metadata:n};if(navigator.sendBeacon){var i=new Blob([JSON.stringify(o)],{type:"application/json"});navigator.sendBeacon(e,i)}else fetch(e,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(o),keepalive:!0}).catch(function(t){console.warn("Zappy Analytics: Failed to track event",t)})}o&&l("pageview",{title:document.title,url:window.location.href}),i&&document.addEventListener("click",function(t){var e=t.target;if("BUTTON"===e.tagName||e.closest("button")){var a="BUTTON"===e.tagName?e:e.closest("button");l("click",{element:"button",text:a.textContent.trim().substring(0,100),id:a.id||null,class:a.className||null})}else if("A"===e.tagName||e.closest("a")){var n="A"===e.tagName?e:e.closest("a");l("navigation",{element:"link",text:n.textContent.trim().substring(0,100),href:n.href,external:n.hostname!==window.location.hostname})}},!0),r&&document.addEventListener("submit",function(t){var e=t.target;l("form_submit",{form_id:e.id||null,form_name:e.name||null,form_action:e.action||null,form_method:e.method||"GET"})},!0);var d=Date.now();window.addEventListener("beforeunload",function(){l("page_unload",{time_on_page:Math.floor((Date.now()-d)/1e3),page_path:window.location.pathname})}),window.zappyAnalytics={track:l,getVisitorId:function(){return s},getSessionId:function(){return c}}}()</script><link href="/styles.css" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Services</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    
+    <!-- Zappy Analytics -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  var config = {
+    websiteId: '42717073-467e-484d-917a-2f9a062839b2',
+    apiUrl: 'https://api.zappy5.com/api/analytics/track',
+    sessionDuration: 30 * 60 * 1000, // 30 minutes
+    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
+    trackPageViews: true,
+    trackClicks: true,
+    trackFormSubmissions: true
+  };
+  
+  // Generate or retrieve persistent visitor ID (30 days)
+  function getVisitorId() {
+    var visitorKey = 'zappy_visitor_' + config.websiteId;
+    var visitor = null;
+    
+    try {
+      visitor = localStorage.getItem(visitorKey);
+      if (visitor) {
+        var visitorData = JSON.parse(visitor);
+        var now = Date.now();
+        
+        // Check if visitor ID is still valid (30 days)
+        if (now - visitorData.created < config.visitorDuration) {
+          // Update last seen timestamp
+          visitorData.lastSeen = now;
+          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
+          return visitorData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: LocalStorage not available');
+    }
+    
+    // Generate new visitor ID
+    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      localStorage.setItem(visitorKey, JSON.stringify({
+        id: newVisitorId,
+        created: Date.now(),
+        lastSeen: Date.now()
+      }));
+    } catch (e) {
+      // Continue without local storage
+    }
+    
+    return newVisitorId;
+  }
+  
+  // Generate or retrieve session ID (30 minutes)
+  function getSessionId() {
+    var sessionKey = 'zappy_session_' + config.websiteId;
+    var session = null;
+    
+    try {
+      session = sessionStorage.getItem(sessionKey);
+      if (session) {
+        var sessionData = JSON.parse(session);
+        var now = Date.now();
+        
+        // Check if session is still valid
+        if (now - sessionData.timestamp < config.sessionDuration) {
+          // Update timestamp
+          sessionData.timestamp = now;
+          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+          return sessionData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: SessionStorage not available');
+    }
+    
+    // Generate new session ID
+    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      sessionStorage.setItem(sessionKey, JSON.stringify({
+        id: newSessionId,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      // Continue without session storage
+    }
+    
+    return newSessionId;
+  }
+  
+  var visitorId = getVisitorId();
+  var sessionId = getSessionId();
+  
+  // Track an event
+  function trackEvent(eventType, data) {
+    data = data || {};
+    
+    var eventData = {
+      website_id: config.websiteId,
+      event_type: eventType,
+      page_path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      visitor_id: visitorId,
+      session_id: sessionId,
+      metadata: data
+    };
+    
+    // Use sendBeacon if available (better for page unload events)
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
+      navigator.sendBeacon(config.apiUrl, blob);
+    } else {
+      // Fallback to fetch
+      fetch(config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData),
+        keepalive: true
+      }).catch(function(error) {
+        console.warn('Zappy Analytics: Failed to track event', error);
+      });
+    }
+  }
+  
+  // Track page view
+  if (config.trackPageViews) {
+    trackEvent('pageview', {
+      title: document.title,
+      url: window.location.href
+    });
+  }
+  
+  // Track clicks on important elements
+  if (config.trackClicks) {
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      
+      // Track button clicks (counted as actions)
+      if (target.tagName === 'BUTTON' || target.closest('button')) {
+        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
+        trackEvent('click', {
+          element: 'button',
+          text: button.textContent.trim().substring(0, 100),
+          id: button.id || null,
+          class: button.className || null
+        });
+      }
+      
+      // Track link clicks (navigation - not counted as actions)
+      else if (target.tagName === 'A' || target.closest('a')) {
+        var link = target.tagName === 'A' ? target : target.closest('a');
+        trackEvent('navigation', {
+          element: 'link',
+          text: link.textContent.trim().substring(0, 100),
+          href: link.href,
+          external: link.hostname !== window.location.hostname
+        });
+      }
+    }, true);
+  }
+  
+  // Track form submissions
+  if (config.trackFormSubmissions) {
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      
+      trackEvent('form_submit', {
+        form_id: form.id || null,
+        form_name: form.name || null,
+        form_action: form.action || null,
+        form_method: form.method || 'GET'
+      });
+    }, true);
+  }
+  
+  // Track time on page (send on page unload)
+  var pageLoadTime = Date.now();
+  
+  window.addEventListener('beforeunload', function() {
+    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
+    
+    trackEvent('page_unload', {
+      time_on_page: timeOnPage,
+      page_path: window.location.pathname
+    });
+  });
+  
+  // Expose tracking function globally for custom events
+  window.zappyAnalytics = {
+    track: trackEvent,
+    getVisitorId: function() { return visitorId; },
+    getSessionId: function() { return sessionId; }
+  };
+  
+})();
+</script>
+<!-- End Zappy Analytics -->
+    <meta property="og:title" content="Services">
+    <meta property="og:description" content="">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Services">
+    <meta name="twitter:description" content="">
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"LocalBusiness","@id":"https://guynovak.co.il#organization","name":"Psyformance by Guy Novak","url":"https://guynovak.co.il","address":{"@type":"PostalAddress","streetAddress":","},"contactPoint":[{"@type":"ContactPoint","contactType":"customer service","email":"guynovak0789@gmail.com","telephone":"054-577-5998"}]},{"@type":"WebSite","@id":"https://guynovak.co.il#website","url":"https://guynovak.co.il","name":"Psyformance by Guy Novak","publisher":{"@id":"https://guynovak.co.il#organization"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://guynovak.co.il"},{"@type":"ListItem","position":2,"name":"Services","item":"https://guynovak.co.il/services"}]}]}</script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"><link href="/assets/favicon.ico" rel="icon" type="image/x-icon"><link href="/assets/favicon-16x16.png" rel="icon" type="image/png" sizes="16x16"><link href="/assets/favicon-32x32.png" rel="icon" type="image/png" sizes="32x32"><link href="/assets/favicon-48x48.png" rel="icon" type="image/png" sizes="48x48"><link href="/assets/favicon-192x192.png" rel="icon" type="image/png" sizes="192x192"><link href="/assets/favicon-512x512.png" rel="icon" type="image/png" sizes="512x512"><link href="/assets/apple-touch-icon.png" rel="apple-touch-icon"><style>.zappy-header{position:static;width:100%;background:#fff;box-shadow:0 4px 19px 0 rgba(0,0,0,.04);padding:16px 10px;text-align:center;font-family:Nunito,sans-serif;font-size:16px;color:#4a4a4a;line-height:21px;display:flex;align-items:center;justify-content:center;min-height:21px}.zappy-header p{margin:0;padding:0;font-weight:400;font-size:16px;line-height:21px;white-space:nowrap;display:inline-block;vertical-align:baseline;margin-bottom:0!important}.zappy-header .created-by{text-transform:lowercase;font-weight:400}.zappy-header .zappy-link{font-weight:700;color:#4a4a4a;text-decoration:none;transition:opacity .2s}.zappy-header .zappy-link:hover{opacity:.7}</style><link href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css" rel="stylesheet"><script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script><script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script><script>!function(){"use strict";var t="42717073-467e-484d-917a-2f9a062839b2",e="https://api.zappy5.com/api/analytics/track",a=18e5,n=2592e6,o=!0,i=!0,r=!0;var s=function(){var e="zappy_visitor_"+t,a=null;try{if(a=localStorage.getItem(e)){var o=JSON.parse(a),i=Date.now();if(i-o.created<n)return o.lastSeen=i,localStorage.setItem(e,JSON.stringify(o)),o.id}}catch(t){console.warn("Zappy Analytics: LocalStorage not available")}var r="zv_"+Date.now()+"_"+Math.random().toString(36).substr(2,9);try{localStorage.setItem(e,JSON.stringify({id:r,created:Date.now(),lastSeen:Date.now()}))}catch(t){}return r}(),c=function(){var e="zappy_session_"+t,n=null;try{if(n=sessionStorage.getItem(e)){var o=JSON.parse(n),i=Date.now();if(i-o.timestamp<a)return o.timestamp=i,sessionStorage.setItem(e,JSON.stringify(o)),o.id}}catch(t){console.warn("Zappy Analytics: SessionStorage not available")}var r="zs_"+Date.now()+"_"+Math.random().toString(36).substr(2,9);try{sessionStorage.setItem(e,JSON.stringify({id:r,timestamp:Date.now()}))}catch(t){}return r}();function l(a,n){n=n||{};var o={website_id:t,event_type:a,page_path:window.location.pathname,referrer:document.referrer||"direct",visitor_id:s,session_id:c,metadata:n};if(navigator.sendBeacon){var i=new Blob([JSON.stringify(o)],{type:"application/json"});navigator.sendBeacon(e,i)}else fetch(e,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(o),keepalive:!0}).catch(function(t){console.warn("Zappy Analytics: Failed to track event",t)})}o&&l("pageview",{title:document.title,url:window.location.href}),i&&document.addEventListener("click",function(t){var e=t.target;if("BUTTON"===e.tagName||e.closest("button")){var a="BUTTON"===e.tagName?e:e.closest("button");l("click",{element:"button",text:a.textContent.trim().substring(0,100),id:a.id||null,class:a.className||null})}else if("A"===e.tagName||e.closest("a")){var n="A"===e.tagName?e:e.closest("a");l("navigation",{element:"link",text:n.textContent.trim().substring(0,100),href:n.href,external:n.hostname!==window.location.hostname})}},!0),r&&document.addEventListener("submit",function(t){var e=t.target;l("form_submit",{form_id:e.id||null,form_name:e.name||null,form_action:e.action||null,form_method:e.method||"GET"})},!0);var d=Date.now();window.addEventListener("beforeunload",function(){l("page_unload",{time_on_page:Math.floor((Date.now()-d)/1e3),page_path:window.location.pathname})}),window.zappyAnalytics={track:l,getVisitorId:function(){return s},getSessionId:function(){return c}}}()</script>
+    <link rel="stylesheet" href="/styles.css">
+
     <style id="zappy-dropdown-submenu-styles">
       /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
       /* Base styles for dropdown submenus - parent must be positioned */
@@ -9,12 +229,15 @@
       .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
       /* Submenu item styling */
       .sub-menu li { list-style: none; margin: 0; padding: 0; }
-      .sub-menu a { display: block !important; padding: 10px 16px !important; color: #333 !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: var(--text-dark, #333) !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu .zappy-nav-child > a { padding-left: 28px !important; font-size: 0.9em !important; opacity: 0.85 !important; }
+      [dir="rtl"] .sub-menu .zappy-nav-child > a, html[lang="he"] .sub-menu .zappy-nav-child > a, html[lang="ar"] .sub-menu .zappy-nav-child > a { padding-left: 10px !important; padding-right: 28px !important; }
+      .sub-menu .zappy-nav-parent > a { font-weight: 600 !important; }
       .sub-menu a:hover { background-color: #f5f5f5; }
       /* RTL (Hebrew/Arabic) dropdown positioning */
       [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
-      /* Hide empty dropdown menus */
-      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))), .sub-menu:not(:has(li)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Hide empty dropdown menus (exclude catalog sub-menus that use <a> children instead of <li>) */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))):not(:has(> a)), .sub-menu:not(:has(li)):not(:has(> a)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
       /* Desktop: show submenu on Menu Group hover */
       li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
       /* Menu Group title styling */
@@ -23,24 +246,66 @@
       /* ========== MOBILE SUBMENU STYLES ========== */
       @media (max-width: 768px) {
         .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
-        .sub-menu.mobile-expanded { max-height: 500px !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        .navbar .sub-menu.mobile-expanded, .nav-menu .sub-menu.mobile-expanded, #navMenu .sub-menu.mobile-expanded { max-height: none !important; overflow-y: visible !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
         [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
         /* Disable hover behavior on mobile */
         .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
         .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
-        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; }
-        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; }
+        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; position: relative !important; min-height: 44px !important; }
+        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; min-width: 0 !important; }
+        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; min-width: 0 !important; padding: 0 !important; line-height: inherit !important; }
+        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu, .navbar li:has(.sub-menu) > .sub-menu, #navMenu li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
         .nav-menu li:has(.sub-menu) > a [class*="chevron"], .nav-menu li:has(.sub-menu) > a [class*="arrow"], .nav-menu li:has(.sub-menu) > a .fa-chevron-down, .nav-menu li:has(.sub-menu) > a .fa-angle-down, nav li:has(.sub-menu) > a [class*="chevron"], nav li:has(.sub-menu) > a [class*="arrow"], #navMenu li:has(.sub-menu) > a [class*="chevron"], #navMenu li:has(.sub-menu) > a [class*="arrow"] { display: none !important; visibility: hidden !important; }
-        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: 44px !important; background: transparent !important; border: none !important; cursor: pointer !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: auto !important; background: transparent !important; border: none !important; cursor: pointer !important; color: var(--text-dark) !important; position: static !important; flex-shrink: 0 !important; align-self: stretch !important; z-index: 2 !important; padding: 0 !important; margin: 0 !important; }
         .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
         .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
-        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
-        .sub-menu a { padding: 10px 0 !important; display: block !important; }
-        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; }
+        .sub-menu a { padding: 10px 0 !important; display: block !important; color: var(--text-dark) !important; white-space: normal !important; }
+        .sub-menu .zappy-nav-child > a { padding-left: 28px !important; font-size: 0.9em !important; opacity: 0.85 !important; }
+        [dir="rtl"] .sub-menu .zappy-nav-child > a, html[lang="he"] .sub-menu .zappy-nav-child > a, html[lang="ar"] .sub-menu .zappy-nav-child > a { padding-left: 0 !important; padding-right: 28px !important; }
+        .sub-menu .zappy-nav-parent > a { font-weight: 600 !important; }
+        .nav-menu.active, #navMenu.active { max-width: 100vw !important; overflow-x: hidden !important; box-sizing: border-box !important; }
+        .navbar .sub-menu li a, nav.navbar .sub-menu li a, .zappy-products-dropdown .sub-menu a { color: var(--text-dark) !important; }
       }
       @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
     </style>
-</head><body><div class="zappy-header" id="zappy-attribution-header" style="display:none"><p><span>Happily</span><span class="created-by">created by</span><a href="https://zappy5.com" rel="noopener noreferrer" target="_blank" class="zappy-link">Zappy</a></p><a id="element-saved-1767348128708-s5ostr9bdw" href="https://zappy5.com/preview/42717073-467e-484d-917a-2f9a062839b2" class="btn btn-primary" style="background-color: #6b8e7f; border: 2px solid #6b8e7f; color: #ffffff; padding: 12px 24px; border-radius: 6px; transition: all 0.3s; cursor: pointer !important; text-decoration: none; display: inline-block; width: auto !important; flex: 0 0 auto !important; border-color: #6b8e7f" data-element-type="button">עמוד הבית</a><a id="element-saved-1767348145156-q0p47lt3vc" href="#" class="btn btn-primary" style="background-color: #6b8e7f; border: 2px solid #6b8e7f; color: #ffffff; padding: 12px 24px; border-radius: 6px; transition: all 0.3s; cursor: pointer !important; text-decoration: none; display: inline-block; width: auto !important; flex: 0 0 auto !important;" data-element-type="button">Click here</a></div>
+
+    <style id="zappy-widget-visibility">
+      html[dir="rtl"] .whatsapp-float { right: 20px !important; left: auto !important; }
+      html[dir="ltr"] .whatsapp-float, html:not([dir]) .whatsapp-float { left: 20px !important; right: auto !important; }
+      html[dir="rtl"] #mic-access-tool-general-button, html[dir="rtl"] .mic-access-tool-general-button,
+      html[dir="rtl"] #mic-init-access-tool .mic-access-tool-general-button,
+      html[dir="rtl"] #mic-init-access-tool #mic-access-tool-general-button,
+      html[dir="rtl"] ._access-icon { left: 20px !important; right: auto !important; }
+      html[dir="ltr"] #mic-access-tool-general-button, html[dir="ltr"] .mic-access-tool-general-button,
+      html[dir="ltr"] #mic-init-access-tool .mic-access-tool-general-button,
+      html[dir="ltr"] #mic-init-access-tool #mic-access-tool-general-button,
+      html[dir="ltr"] ._access-icon,
+      html:not([dir]) #mic-access-tool-general-button, html:not([dir]) .mic-access-tool-general-button,
+      html:not([dir]) #mic-init-access-tool .mic-access-tool-general-button,
+      html:not([dir]) #mic-init-access-tool #mic-access-tool-general-button,
+      html:not([dir]) ._access-icon { right: 20px !important; left: auto !important; }
+      @media (max-width: 768px) { .whatsapp-float { display: flex !important; } }
+      @media (min-width: 769px) { .whatsapp-float { display: flex !important; } }
+      @media (max-width: 768px) {
+        #mic-access-tool-general-button, .mic-access-tool-general-button,
+        #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
+        ._access-icon, #mic-access-tool-box, .mic-access-tool-box,
+        #mic-init-access-tool #mic-access-tool-box, div[id*="mic-access-tool-box"], ._access-menu {
+          display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important;
+        }
+      }
+      @media (min-width: 769px) {
+        #mic-access-tool-general-button, .mic-access-tool-general-button,
+        #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
+        ._access-icon, #mic-access-tool-box, .mic-access-tool-box,
+        #mic-init-access-tool #mic-access-tool-box, div[id*="mic-access-tool-box"], ._access-menu {
+          display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important;
+        }
+      }
+    </style>
+</head>
+<body>
+<div class="zappy-header" id="zappy-attribution-header" style="display:none"><p><span>Happily</span><span class="created-by">created by</span><a href="https://zappy5.com" rel="noopener noreferrer" target="_blank" class="zappy-link">Zappy</a></p><a id="element-saved-1767348128708-s5ostr9bdw" href="https://zappy5.com/preview/42717073-467e-484d-917a-2f9a062839b2" class="btn btn-primary" style="background-color: #6b8e7f; border: 2px solid #6b8e7f; color: #ffffff; padding: 12px 24px; border-radius: 6px; transition: all 0.3s; cursor: pointer !important; text-decoration: none; display: inline-block; width: auto !important; flex: 0 0 auto !important; border-color: #6b8e7f" data-element-type="button">עמוד הבית</a><a id="element-saved-1767348145156-q0p47lt3vc" href="#" class="btn btn-primary" style="background-color: #6b8e7f; border: 2px solid #6b8e7f; color: #ffffff; padding: 12px 24px; border-radius: 6px; transition: all 0.3s; cursor: pointer !important; text-decoration: none; display: inline-block; width: auto !important; flex: 0 0 auto !important;" data-element-type="button">Click here</a></div>
 <nav class="navbar" id="navbar">
   <div class="container nav-container">
     <div class="nav-brand"><a href="/" class="logo-link"><img alt="Psyformance by Guy Novak" src="/assets/psyformance-general-logo.webp?v=1762780871702-r5iqw3" class="logo"></a>
@@ -57,7 +322,7 @@
 <section class="section service-section" id="אימון-מנטלי-לספורטאים" data-zappy-section="true">
   <div class="container">
     <div class="service-item reverse">
-      <div class="service-content"><h2 class="">אימון מנטאלי לספורטאים תחרותיים</h2><p class="">תוכניות אימון מנטאלי מותאמות אישית לספורטאים תחרותיים. פיתוח חוסן נפשי, התמודדות עם לחץ תחרותי, צמצום תסמיני שחיקה והגעה לשיא הביצועים.</p><ul class="service-features zappy-inline-grid-active zappy-item-component zappy-vertical-grid"><li class="">טכניקות פסיכולוגיות מבוססות מחקר.</li><li class="">ניהול חרדה ולחץ תחרותי</li><li class="">פיתוח ריכוז ומיקוד</li><li class="">התמודדות עם כישלונות ובניית חוסן</li><li class="">הכנה מנטלית לתחרויות ואירועים חשובים</li></ul></div><div class="service-image"><img alt="אימון מנטאלי לספורטאים תחרותיים" src="/assets/psyformance-general-service-service-6.webp?v=1762692329926" data-context="Professional athlete in mental training session with sports psychologist, practicing visualization techniques in training facility" data-placeholder="service-6" data-element-type="image" data-element-id="img-1767348124980-gass67vnp" class="zappy-editable-image" data-original-position="static" style="position: relative;"></div>
+      <div class="service-content"><h2 class="">אימון מנטאלי לספורטאים תחרותיים</h2><p class="">תוכניות אימון מנטאלי מותאמות אישית לספורטאים תחרותיים. פיתוח חוסן נפשי, התמודדות עם לחץ תחרותי, צמצום תסמיני שחיקה והגעה לשיא הביצועים.</p><ul class="service-features"><li class="">טכניקות פסיכולוגיות מבוססות מחקר.</li><li class="">ניהול חרדה ולחץ תחרותי</li><li class="">פיתוח ריכוז ומיקוד</li><li class="">התמודדות עם כישלונות ובניית חוסן</li><li class="">הכנה מנטלית לתחרויות ואירועים חשובים</li></ul></div><div class="service-image"><img alt="אימון מנטאלי לספורטאים תחרותיים" src="/assets/psyformance-general-service-service-6.webp?v=1762692329926" data-context="Professional athlete in mental training session with sports psychologist, practicing visualization techniques in training facility" data-placeholder="service-6" data-element-type="image" data-element-id="img-1767348124980-gass67vnp" class="zappy-editable-image" ></div>
     </div>
   </div>
 </section>
@@ -65,7 +330,7 @@
   <div class="container">
     <div class="service-item">
       <div class="service-content"><h2 class="">חינוך ספורטיבי לספורטאים צעירים</h2><p class="">&nbsp;חינוך ספורטיבי לספורטאים וספורטאיות צעירים (מגיל 13 ומעלה) במעבר מחוג מהנה למסלול תחרותי מודע.<br data-start="252" data-end="255">
-התהליך מתמקד בבניית זהות של מתחרה, הבנה של מה נדרש כדי להשתפר, ופיתוח גישה בוגרת, מחויבת ובריאה לעולם הספורט ההישגי.&nbsp;&nbsp;</p><ul class="service-features zappy-vertical-grid zappy-inline-grid-active zappy-item-component" style="grid-template-columns: minmax(0px, 1fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(0px, 1fr) !important;"><li class="">
+התהליך מתמקד בבניית זהות של מתחרה, הבנה של מה נדרש כדי להשתפר, ופיתוח גישה בוגרת, מחויבת ובריאה לעולם הספורט ההישגי.&nbsp;&nbsp;</p><ul class="service-features" style="--zappy-grid-cols: minmax(0px, 1fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(0px, 1fr) !important; grid-template-columns: minmax(0px, 1fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(0px, 1fr) !important;" data-zappy-explicit-columns="true"><li class="">
 
 מעבר מתפיסת "משתתף" לתפיסת "מתחרה"
 
@@ -85,26 +350,26 @@
 
 התאמת ציפיות בין הספורטאי, המאמן והסביבה
 
-</li></ul></div><div class="service-image"><img id="element-saved-1767272239301-p96wk4mbvmd" src="/assets/psyformance-general-service-service-9-1767272233794-eqmc86.webp" alt="Image" style="width: auto; height: auto; border-radius: 8px; max-width: 100%; object-fit: cover; object-position: 50% 50%; position: relative;" data-element-type="image" width="536" data-element-id="img-1767348124980-tsllhkqy7" class="zappy-editable-image" data-original-position="static"></div>
+</li></ul></div><div class="service-image"><img id="element-saved-1767272239301-p96wk4mbvmd" src="/assets/psyformance-general-service-service-9-1767272233794-eqmc86.webp" alt="Image" style="width: auto; height: auto; border-radius: 8px; max-width: 100%; object-fit: cover; object-position: 50% 50%; " data-element-type="image" width="536" data-element-id="img-1767348124980-tsllhkqy7" class="zappy-editable-image"></div>
     </div>
   </div>
 </section><section class="section service-section" id="הדרכה-וליווי-להורים-לספורטאים-תחרותיים" data-zappy-section="true" style="opacity: 1;">
   <div class="container">
     <div class="service-item reverse">
-      <div class="service-content"><h2>הדרכה וליווי להורים לספורטאים תחרותיים</h2><p>תהליך המיועד להורים המעורבים במסע הספורטיבי של ילדיהם, ומעוניינים להבין כיצד לתמוך בהם בצורה נכונה, מאוזנת ומקדמת. ההדרכה מעניקה כלים לתקשורת טובה יותר עם הילד והמאמן, להתמודדות עם לחץ ותחרותיות, ולשמירה על תפקיד ההורה גם בזמנים מאתגרים.</p><ul class="service-features zappy-vertical-grid"><li>חיזוק מערכת היחסים בין הורה–מאמן–ספורטאי</li><li>כלים לאבחון וזיהוי צרכים</li><li>כלים לתמיכה רגשית והתמודדות עם אכזבות</li><li>שיח מנטלי מקדם והתנהלות ברגעי לחץ ותחרות</li><li>מדידה והערכת תוצאות</li></ul></div><div class="service-image"><img alt="הדרכה למאמנים עסקיים" src="/assets/psyformance-general-service-service-1-1768740719426-fev73x.webp" data-context="Business coaches in professional training workshop, learning advanced performance psychology techniques in modern conference room" data-placeholder="service-10" data-element-type="image" data-element-id="img-1767348124980-5po4n3wzv" class="zappy-editable-image" data-original-position="static" style="position: relative; object-fit: contain; object-position: 53% 32%; width: auto; height: auto; max-width: 100%; display: block; border-radius: 8px; margin: 20px auto;"></div>
+      <div class="service-content"><h2>הדרכה וליווי להורים לספורטאים תחרותיים</h2><p>תהליך המיועד להורים המעורבים במסע הספורטיבי של ילדיהם, ומעוניינים להבין כיצד לתמוך בהם בצורה נכונה, מאוזנת ומקדמת. ההדרכה מעניקה כלים לתקשורת טובה יותר עם הילד והמאמן, להתמודדות עם לחץ ותחרותיות, ולשמירה על תפקיד ההורה גם בזמנים מאתגרים.</p><ul class="service-features"><li>חיזוק מערכת היחסים בין הורה–מאמן–ספורטאי</li><li>כלים לאבחון וזיהוי צרכים</li><li>כלים לתמיכה רגשית והתמודדות עם אכזבות</li><li>שיח מנטלי מקדם והתנהלות ברגעי לחץ ותחרות</li><li>מדידה והערכת תוצאות</li></ul></div><div class="service-image"><img alt="הדרכה למאמנים עסקיים" src="/assets/psyformance-general-service-service-1-1778399117069-n1t4i4.webp" data-context="Business coaches in professional training workshop, learning advanced performance psychology techniques in modern conference room" data-placeholder="service-10" data-element-type="image" data-element-id="img-1767348124980-5po4n3wzv" class="zappy-editable-image" style="object-fit: contain; object-position: 53% 32%; width: auto; height: auto; max-width: 100%; display: block; border-radius: 8px; margin: 20px auto;"></div>
     </div>
   </div>
 </section><section class="section service-section" id="ליווי-ויעוץ-לעובדי-רפואה" data-zappy-section="true">
   <div class="container">
     <div class="service-item">
-      <div class="service-content"><h2>ליווי ויעוץ לעובדי רפואה</h2><p>תמיכה מקצועית לרופאים וכלל עובדי הרפואה המתמודדים עם לחץ גבוה, החלטות קריטיות ושחיקה מקצועית. אנו מספקים כלים להתמודדות מנטלית ושיפור ביצועים קליניים.</p><ul class="service-features zappy-vertical-grid"><li>ניהול מתח ומניעת שחיקה מקצועית</li><li>התמודדות עם החלטות רפואיות קריטיות</li><li>שיפור תקשורת עם מטופלים ובני משפחה</li><li>התמודדות עם ביקורת ומשוב מצד בכירים</li><li>איזון בין חיי עבודה לחיים אישיים</li></ul></div><div class="service-image"><img alt="ליווי פסיכולוגי לרופאים" src="/assets/psyformance-general-service-service-7-1768740985006-2bwjht.webp" data-context="Medical doctor in consultation with psychologist, discussing stress management and professional resilience in clinical setting" data-placeholder="service-7" data-element-type="image" data-element-id="img-1767348124980-2t0cpxi6d" class="zappy-editable-image" data-original-position="static" style="position: relative; object-fit: contain; object-position: 60% 45%; width: auto; height: auto; max-width: 100%; display: block; border-radius: 8px; margin: 20px auto;"></div>
+      <div class="service-content"><h2>ליווי ויעוץ לעובדי רפואה</h2><p>תמיכה מקצועית לרופאים וכלל עובדי הרפואה המתמודדים עם לחץ גבוה, החלטות קריטיות ושחיקה מקצועית. אנו מספקים כלים להתמודדות מנטלית ושיפור ביצועים קליניים.</p><ul class="service-features"><li>ניהול מתח ומניעת שחיקה מקצועית</li><li>התמודדות עם החלטות רפואיות קריטיות</li><li>שיפור תקשורת עם מטופלים ובני משפחה</li><li>התמודדות עם ביקורת ומשוב מצד בכירים</li><li>איזון בין חיי עבודה לחיים אישיים</li></ul></div><div class="service-image"><img alt="ליווי פסיכולוגי לרופאים" src="/assets/psyformance-general-service-service-7-1768740985006-2bwjht.webp" data-context="Medical doctor in consultation with psychologist, discussing stress management and professional resilience in clinical setting" data-placeholder="service-7" data-element-type="image" data-element-id="img-1767348124980-2t0cpxi6d" class="zappy-editable-image" style="object-fit: contain; object-position: 60% 45%; width: auto; height: auto; max-width: 100%; display: block; border-radius: 8px; margin: 20px auto;"></div>
     </div>
   </div>
 </section>
 <section class="section service-section" id="התמודדות-עם-חרדת-במה" data-zappy-section="true">
   <div class="container">
     <div class="service-item reverse">
-      <div class="service-content"><h2 class="">התמודדות עם חרדת במה</h2><p class="">יעוץ והכוונה לאומני במה, מרצים ומציגים המעוניינים להתגבר על האתגרים הנלווים לעמידה מול קהל כמו חרדת במה וקשב לקהל. שיטות מוכחות להפחתת חרדת ביצוע והגברת ביטחון עצמי.</p><ul class="service-features zappy-inline-grid-active zappy-item-component zappy-vertical-grid"><li class="">טכניקות הרפיה וויסות עוררות.</li><li class="">בניית מסוגלות והכנה מנטלית</li><li class="">שיפור נוכחות במה וקשר עם הקהל</li><li class="">התמודדות עם ביקורת ולחץ ציבורי</li><li class="">פיתוח שגרות הכנה אישיות</li></ul></div><div class="service-image"><img alt="התמודדות עם חרדת במה" src="/assets/psyformance-general-service-service-8.webp?v=1762857770524" data-context="Stage performer practicing presentation techniques with performance coach, preparing for public speaking in theater setting" data-placeholder="service-8" data-element-type="image" data-element-id="img-1767348124980-xy7wv7on1" class="zappy-editable-image" data-original-position="static" style="position: relative;"></div>
+      <div class="service-content"><h2 class="">התמודדות עם חרדת במה</h2><p class="">יעוץ והכוונה לאומני במה, מרצים ומציגים המעוניינים להתגבר על האתגרים הנלווים לעמידה מול קהל כמו חרדת במה וקשב לקהל. שיטות מוכחות להפחתת חרדת ביצוע והגברת ביטחון עצמי.</p><ul class="service-features"><li class="">טכניקות הרפיה וויסות עוררות.</li><li class="">בניית מסוגלות והכנה מנטלית</li><li class="">שיפור נוכחות במה וקשר עם הקהל</li><li class="">התמודדות עם ביקורת ולחץ ציבורי</li><li class="">פיתוח שגרות הכנה אישיות</li></ul></div><div class="service-image"><img alt="התמודדות עם חרדת במה" src="/assets/psyformance-general-service-service-8.webp?v=1762857770524" data-context="Stage performer practicing presentation techniques with performance coach, preparing for public speaking in theater setting" data-placeholder="service-8" data-element-type="image" data-element-id="img-1767348124980-xy7wv7on1" class="zappy-editable-image" ></div>
     </div>
   </div>
 </section>
@@ -112,10 +377,12 @@
 <section class="section service-section" id="ייעוץ-ארגוני-לסטארטאפים" data-zappy-section="true">
   <div class="container">
     <div class="service-item">
-      <div class="service-content"><h2 class="">ייעוץ ארגוני לסטארטאפים</h2><p class="">ליווי מקצועי מקיף למייסדים ומנכ"לים צעירים של סטארטאפים המתמודדים עם האתגרים הייחודיים של סביבת העבודה המהירה והלחוצה.</p><ul class="service-features zappy-inline-grid-active zappy-item-component zappy-vertical-grid"><li class="">אבחון וזיהוי נקודות חוזק וחולשה בהנהגה</li><li class="">פיתוח אסטרטגיות להתמודדות עם לחץ ואי-ודאות</li><li class="">שיפור תקשורת ועבודת צוות</li><li class="">כלים לקבלת החלטות אסטרטגיות תחת לחץ</li><li class="">ליווי בתהליכי גיוס כספים ומשברים ארגוניים</li></ul></div><div class="service-image"><img alt="ייעוץ ביצועים לסטארטאפים" src="/assets/psyformance-general-service-service-5.webp?v=1762687503115" data-context="Startup founders in brainstorming session with performance consultant, discussing business strategy on whiteboard in modern tech office" data-placeholder="service-5" data-element-type="image" data-element-id="img-1767348124980-8c1cnn3p5" class="zappy-editable-image" data-original-position="static" style="position: relative;"></div>
+      <div class="service-content"><h2 class="">ייעוץ ארגוני לסטארטאפים</h2><p class="">ליווי מקצועי מקיף למייסדים ומנכ"לים צעירים של סטארטאפים המתמודדים עם האתגרים הייחודיים של סביבת העבודה המהירה והלחוצה.</p><ul class="service-features"><li class="">אבחון וזיהוי נקודות חוזק וחולשה בהנהגה</li><li class="">פיתוח אסטרטגיות להתמודדות עם לחץ ואי-ודאות</li><li class="">שיפור תקשורת ועבודת צוות</li><li class="">כלים לקבלת החלטות אסטרטגיות תחת לחץ</li><li class="">ליווי בתהליכי גיוס כספים ומשברים ארגוניים</li></ul></div><div class="service-image"><img alt="ייעוץ ביצועים לסטארטאפים" src="/assets/psyformance-general-service-service-5.webp?v=1762687503115" data-context="Startup founders in brainstorming session with performance consultant, discussing business strategy on whiteboard in modern tech office" data-placeholder="service-5" data-element-type="image" data-element-id="img-1767348124980-8c1cnn3p5" class="zappy-editable-image" ></div>
     </div>
   </div>
-</section><section class="process-section"><div class="container"><h2 class="section-title">תהליך העבודה שלנו</h2><div class="process-grid"><div class="process-step"><div class="step-number">1</div><h3>פגישת היכרות</h3><p>שיחה ראשונית להבנת הצרכים, האתגרים והמטרות שלכם</p></div><div class="process-step"><div class="step-number">2</div><h3>אבחון</h3><p>הערכה מקצועית של המצב הנוכחי וזיהוי נקודות לשיפור ושימור</p></div><div class="process-step"><div class="step-number">3</div><h3>תוכנית מותאמת</h3><p>בניית תוכנית עבודה אישית עם יעדים ברורים וכלים מעשיים</p></div><div class="process-step"><div class="step-number">4</div><h3>ליווי ותמיכה</h3><p>מפגשים קבועים, תרגול וליווי מתמשך להשגת התוצאות</p></div></div></div></section><section class="cta-section"><div class="container"><div class="cta-content"><h2>מעוניינים לשמוע עוד?</h2><p>צרו קשר לפגישת ייעוץ ראשונית</p><a href="/contact" class="btn btn-cta">קבעו פגישה</a></div></div></section><a href="https://wa.me/972545775998" rel="noopener noreferrer" target="_blank" aria-label="WhatsApp" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a><footer class="legal-footer"><div class="container"><div class="footer-main"><div class="all-rights-reserved"><p>© 2025 Psyformance by Guy Novak. כל הזכויות שמורות.</p></div><div class="footer-social"><a href="#" rel="noopener noreferrer" target="_blank" aria-label="Facebook" style="display:none"><i class="fab fa-facebook"></i></a><a href="https://instagram.com/psy.formance" rel="noopener noreferrer" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a><a href="https://wa.me/972545775998" rel="noopener noreferrer" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a><a href="#" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn" style="display:none"><i class="fab fa-linkedin"></i></a></div><div class="footer-legal"><a href="privacy.html" rel="noopener" target="_blank" aria-label="מדיניות פרטיות">מדיניות פרטיות</a><span class="separator">|</span><a href="accessibility.html" rel="noopener" target="_blank" aria-label="נגישות">נגישות</a><span class="separator">|</span><a href="terms.html" rel="noopener" target="_blank" aria-label="תנאי שימוש">תנאי שימוש</a></div></div><div class="zappy-attribution"><p>נוצר באמצעות<a href="https://zappy5.com" rel="noopener noreferrer" target="_blank" style="color:inherit;text-decoration:underline">Zappy</a></p></div></div></footer><script>!function(){var e=window.location.href;e.includes("/preview/")||e.includes("/preview-fullscreen/")||e.includes("localhost:5001")||e.includes("localhost:3000")||fetch("https://api.zappy5.com/api/website/42717073-467e-484d-917a-2f9a062839b2/tier").then(function(e){return e.json()}).then(function(e){if(e.showAttribution){var t=document.getElementById("zappy-attribution-header");t&&(t.style.display="block")}}).catch(function(e){console.error("Failed to check tier:",e)})}()</script><div data-integration="accessibility:toolbar"></div><script src="/script.js"></script>
+</section><section class="process-section"><div class="container"><h2 class="section-title">תהליך העבודה שלנו</h2><div class="process-grid"><div class="process-step"><div class="step-number">1</div><h3>פגישת היכרות</h3><p>שיחה ראשונית להבנת הצרכים, האתגרים והמטרות שלכם</p></div><div class="process-step"><div class="step-number">2</div><h3>אבחון</h3><p>הערכה מקצועית של המצב הנוכחי וזיהוי נקודות לשיפור ושימור</p></div><div class="process-step"><div class="step-number">3</div><h3>תוכנית מותאמת</h3><p>בניית תוכנית עבודה אישית עם יעדים ברורים וכלים מעשיים</p></div><div class="process-step"><div class="step-number">4</div><h3>ליווי ותמיכה</h3><p>מפגשים קבועים, תרגול וליווי מתמשך להשגת התוצאות</p></div></div></div></section><section class="cta-section"><div class="container"><div class="cta-content"><h2>מעוניינים לשמוע עוד?</h2><p>צרו קשר לפגישת ייעוץ ראשונית</p><a href="/contact" class="btn btn-cta">קבעו פגישה</a></div></div></section><a href="https://wa.me/972545775998" rel="noopener noreferrer" target="_blank" aria-label="WhatsApp" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a><footer class="legal-footer"><div class="container"><div class="footer-main"><div class="all-rights-reserved"><p>© 2025 Psyformance by Guy Novak. כל הזכויות שמורות.</p></div><div class="footer-social"><a href="#" rel="noopener noreferrer" target="_blank" aria-label="Facebook" style="display:none"><i class="fab fa-facebook"></i></a><a href="https://instagram.com/psy.formance" rel="noopener noreferrer" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a><a href="https://wa.me/972545775998" rel="noopener noreferrer" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a><a href="#" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn" style="display:none"><i class="fab fa-linkedin"></i></a></div><div class="footer-legal"><a href="privacy.html" rel="noopener" target="_blank" aria-label="מדיניות פרטיות">מדיניות פרטיות</a><span class="separator">|</span><a href="accessibility.html" rel="noopener" target="_blank" aria-label="נגישות">נגישות</a><span class="separator">|</span><a href="terms.html" rel="noopener" target="_blank" aria-label="תנאי שימוש">תנאי שימוש</a></div></div><div class="zappy-attribution"><p>נוצר באמצעות<a href="https://zappy5.com" rel="noopener noreferrer" target="_blank" style="color:inherit;text-decoration:underline">Zappy</a></p></div></div></footer><script>!function(){var e=window.location.href;e.includes("/preview/")||e.includes("/preview-fullscreen/")||e.includes("localhost:5001")||e.includes("localhost:3000")||fetch("https://api.zappy5.com/api/website/42717073-467e-484d-917a-2f9a062839b2/tier").then(function(e){return e.json()}).then(function(e){if(e.showAttribution){var t=document.getElementById("zappy-attribution-header");t&&(t.style.display="block")}}).catch(function(e){console.error("Failed to check tier:",e)})}()</script><div data-integration="accessibility:toolbar"></div>
+    <script src="/script.js"></script>
+
     <script id="zappy-mobile-submenu-script">
     (function() {
       function initMobileSubmenuToggles() {
@@ -166,4 +433,5 @@
       }, 500);
     })();
     </script>
-</body></html>
+</body>
+</html>
