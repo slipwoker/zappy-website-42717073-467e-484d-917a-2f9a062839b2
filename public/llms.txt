@@ -34,6 +34,27 @@ Information about WCAG compliance and accessibility features.
 
 ---
 
+## How to Contact Us
+
+- Email: guynovak0789@gmail.com
+- Phone: 054-577-5998
+- Phone (tel): tel:0545775998
+- Address: ,
+
+### Contact form
+- URL: https://guynovak.co.il/contact
+- Endpoint: https://guynovak.co.il/api/email/contact-form
+- Method: POST
+- Content-Type: application/json
+- Fields:
+  - `name` (text, required)
+  - `email` (email, required)
+  - `phone` (tel, required)
+  - `service` (select)
+  - `message` (textarea)
+
+---
+
 # Business Context (for LLM understanding)
 
 ## About Psyformance by Guy Novak
@@ -49,7 +70,8 @@ General
 
 ---
 
-# Additional Resources
+# Machine-readable feeds
 
-- **Sitemap**: https://guynovak.co.il/sitemap.xml
-- **Robots.txt**: https://guynovak.co.il/robots.txt
+- Sitemap (XML): https://guynovak.co.il/sitemap.xml
+- Robots: https://guynovak.co.il/robots.txt
+- Flattened page text (for LLMs): https://guynovak.co.il/llms-full.txt
